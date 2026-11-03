@@ -1,45 +1,41 @@
 // SPDX-License-Identifier: GPL-3.0-only
 package helium314.keyboard.latin.utils
 
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import helium314.keyboard.latin.R
+import androidx.compose.ui.unit.sp
+import helium314.keyboard.settings.graphite.G
 
+/** Graphite settings are light only: violet accent, Geist type, headings at SemiBold at most. */
 @Composable
-fun Theme(dark: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val material3 = Typography()
-    val colorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        if (dark) dynamicDarkColorScheme(LocalContext.current)
-        else dynamicLightColorScheme(LocalContext.current)
-    } else {
-        // todo (later): more colors
-        if (dark) darkColorScheme(
-            primary = colorResource(R.color.accent),
-        )
-        else lightColorScheme(
-            primary = colorResource(R.color.accent)
-        )
-    }
+fun Theme(@Suppress("UNUSED_PARAMETER") dark: Boolean = false, content: @Composable () -> Unit) {
+    val m = Typography()
+    // Geist is drawn for zero tracking; Material's default letter spacing makes reused rows look foreign
+    fun TextStyle.g(weight: FontWeight? = fontWeight) = copy(fontFamily = G.Geist, fontWeight = weight, letterSpacing = 0.sp)
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography(
-            titleLarge = material3.titleLarge.copy(fontWeight = FontWeight.Bold),
-            titleMedium = material3.titleMedium.copy(fontWeight = FontWeight.Bold),
-            titleSmall = material3.titleSmall.copy(fontWeight = FontWeight.Bold)
+        colorScheme = lightColorScheme(
+            primary = G.Accent,
+            onSurface = G.Ink,
+            onSurfaceVariant = G.Sub,
+            background = G.Bg,
+            surface = G.Bg,
+            surfaceContainer = G.Card,
+            surfaceContainerHigh = G.Card,
         ),
-        //shapes = Shapes(),
+        typography = Typography(
+            displayLarge = m.displayLarge.g(), displayMedium = m.displayMedium.g(), displaySmall = m.displaySmall.g(),
+            headlineLarge = m.headlineLarge.g(), headlineMedium = m.headlineMedium.g(), headlineSmall = m.headlineSmall.g(),
+            titleLarge = m.titleLarge.g(FontWeight.SemiBold), titleMedium = m.titleMedium.g(FontWeight.SemiBold),
+            titleSmall = m.titleSmall.g(FontWeight.SemiBold),
+            bodyLarge = m.bodyLarge.g(), bodyMedium = m.bodyMedium.g(), bodySmall = m.bodySmall.g(),
+            labelLarge = m.labelLarge.g(), labelMedium = m.labelMedium.g(), labelSmall = m.labelSmall.g(),
+        ),
         content = content
     )
 }
 
-const val previewDark = true
+const val previewDark = false

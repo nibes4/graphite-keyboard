@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Graphite settings redesign: approved mockup copy, verbatim. -->
+<resources>
+    <string name="g_search">Поиск по настройкам</string>
+    <!-- not in the mockups: proposed copy, waits for Nick's approval -->
+    <string name="g_search_close">Закрыть поиск</string>
+    <string name="g_search_empty">Ничего не найдено</string>
+    <string name="g_search_empty_sub">Попробуй другое слово</string>
+    <string name="g_hero_description">Так сейчас выглядит клавиатура</string>
+    <string name="g_group_typing">Набор</string>
+    <string name="g_languages">Языки и раскладки</string>
+    <string name="g_languages_sub">Смена языка свайпом по пробелу</string>
+    <string name="g_swipe">Свайп-набор</string>
+    <string name="g_correction">Исправление текста</string>
+    <string name="g_dictionaries">Словари</string>
+    <string name="g_group_look">Вид и ввод</string>
+    <string name="g_theme">Тема и свет</string>
+    <string name="g_theme_sub">Цвет клавиши ввода, блик</string>
+    <string name="g_keys">Клавиши и ряды</string>
+    <string name="g_keys_sub">Ряд цифр, стрелки, эмодзи</string>
+    <string name="g_strip">Панель подсказок</string>
+    <string name="g_feedback">Вибрация и звук</string>
+    <string name="g_group_more">Ещё</string>
+    <string name="g_backup">Резервная копия</string>
+    <string name="g_backup_sub">Перенос на другой телефон и сброс</string>
+    <string name="g_about">О приложении</string>
+    <string name="g_version">Версия %s</string>
+    <string name="g_advanced">Расширенные настройки</string>
+    <string name="g_advanced_sub_off">Показывает ещё: высоту клавиатуры, свои цвета, плоские клавиши без света</string>
+    <string name="g_advanced_sub_on">Размер, цвета вручную, вид без эффектов</string>
+    <string name="g_group_advanced">Расширенные</string>
+    <string name="g_adv_plain">Обычный вид без эффектов</string>
+    <string name="g_adv_plain_sub">Плоские клавиши, без света и теней</string>
+    <string name="g_adv_colors">Цвета и стиль вручную</string>
+    <string name="g_adv_colors_sub">Свои цвета фона, клавиш и букв</string>
+    <string name="g_adv_size">Размер и положение</string>
+    <string name="g_adv_size_sub">Высота, отступ снизу, одной рукой, разделённая</string>
+    <string name="g_adv_trail">След и скорость свайпа</string>
+    <string name="g_adv_trail_sub">Как выглядит след, всплывающее слово, чувствительность</string>
+    <string name="g_adv_toolbar">Кнопки над клавиатурой</string>
+    <string name="g_adv_toolbar_sub">Какие кнопки показывать и в каком порядке</string>
+    <string name="g_adv_layouts">Дополнительные раскладки</string>
+    <string name="g_adv_layouts_sub">Символы, цифры, свои раскладки</string>
+    <string name="g_adv_developer">Для разработчиков</string>
+    <string name="g_adv_developer_sub">Отладка и пробные функции</string>
+    <string name="g_advanced_note">Выключите переключатель, и этот раздел снова спрячется. Ваши настройки при этом не сбросятся.</string>
+</resources>

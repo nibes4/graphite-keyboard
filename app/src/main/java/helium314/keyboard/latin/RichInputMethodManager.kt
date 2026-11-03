@@ -8,6 +8,7 @@ package helium314.keyboard.latin
 import android.content.Context
 import android.inputmethodservice.InputMethodService
 import android.os.Build
+import android.speech.SpeechRecognizer
 import android.view.inputmethod.InputMethodInfo
 import android.view.inputmethod.InputMethodManager
 import android.view.inputmethod.InputMethodSubtype
@@ -54,7 +55,10 @@ class RichInputMethodManager private constructor() {
 
     private var shortcuts = listOf<Shortcut>()
 
-    val isShortcutImeReady get() = shortcuts.isNotEmpty()
+    // the mic dictates through the system speech recognizer, so it only needs one to exist
+    private var hasSpeechRecognizer = false
+
+    val isShortcutImeReady get() = hasSpeechRecognizer
 
     fun getEnabledInputMethodSubtypes(imi: InputMethodInfo, allowsImplicitlySelectedSubtypes: Boolean) =
         inputMethodInfoCache.getEnabledInputMethodSubtypeList(imi, allowsImplicitlySelectedSubtypes)
@@ -150,6 +154,7 @@ class RichInputMethodManager private constructor() {
         LanguageOnSpacebarUtils.onSubtypeChanged(richSubtype, implicitlyEnabledSubtype, systemLocale)
         LanguageOnSpacebarUtils.setEnabledSubtypes(SubtypeSettings.getEnabledSubtypes(true))
 
+        hasSpeechRecognizer = SpeechRecognizer.isRecognitionAvailable(context)
         // TODO: Update an icon for shortcut IME
         shortcuts = inputMethodManager.shortcutInputMethodsAndSubtypes.entries.flatMap { (imi, subtypes) ->
             subtypes.map { Shortcut(imi, it) }

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -155,7 +156,11 @@ open class SettingsActivity : ComponentActivity(), SharedPreferences.OnSharedPre
             intent = null
         }
 
-        enableEdgeToEdge()
+        // light screens only, so status and navigation bar icons stay dark
+        enableEdgeToEdge(
+            SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT),
+            SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT),
+        )
     }
 
     override fun onStart() {

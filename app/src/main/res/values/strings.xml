@@ -9,11 +9,11 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"
     tools:ignore="MissingTranslation">
     <!-- Name of Android spell checker service. The app name should not be translated. -->
-    <string name="spell_checker_service_name">HeliBoard Spell Checker</string>
+    <string name="spell_checker_service_name">Graphite Spell Checker</string>
     <!-- Title for IME settings screen. The app name should not be translated. -->
-    <string name="ime_settings">HeliBoard Settings</string>
+    <string name="ime_settings">Graphite Settings</string>
     <!-- Title for the spell checking service settings screen. The app name should not be translated. -->
-    <string name="android_spell_checker_settings">HeliBoard Spell Checker Settings</string>
+    <string name="android_spell_checker_settings">Graphite Spell Checker Settings</string>
     <!-- Option to provide vibrate/haptic feedback on keypress -->
     <string name="vibrate_on_keypress">Vibrate on keypress</string>
     <!-- Option to provide vibrate/haptic feedback on keypress even in do not disturb mode -->
@@ -732,6 +732,19 @@ New dictionary:
     <!-- Theme name for holo white theme -->
     <string name="theme_name_holo_white" tools:keep="@string/theme_name_holo_white">Holo White</string>
     <!-- Theme name for dark theme (based on old no-border dark) -->
+    <string name="raster_theme">Photoreal keys</string>
+    <string name="raster_theme_summary">Draw the keys from the Graphite theme images</string>
+    <string name="key_light_strength">Light on the keys</string>
+    <string name="tilt_light">Light follows tilt</string>
+    <string name="tilt_light_summary">Light and key shadows move when you tilt the phone</string>
+    <string name="primary_color">Primary colour</string>
+    <string name="primary_color_summary">Enter key, long-press popups and the mic</string>
+    <string name="primary_color_custom">Custom colour…</string>
+    <string name="voice_input_unavailable">Voice input is not available on this phone</string>
+    <string name="voice_input_language_unsupported">Voice input does not support this language yet</string>
+    <string name="voice_input_permission_granted">Microphone allowed. Tap the mic to dictate</string>
+    <string name="voice_input_permission_denied">Voice input needs the microphone. Allow it in the app settings</string>
+    <string name="theme_name_raycast" tools:keep="@string/theme_name_raycast">Graphite</string>
     <string name="theme_name_dark" tools:keep="@string/theme_name_dark">Dark</string>
     <!-- Theme name for darker theme (based on old border dark), todo: re-consider that stupid name -->
     <string name="theme_name_darker" tools:keep="@string/theme_name_darker">Darker</string>

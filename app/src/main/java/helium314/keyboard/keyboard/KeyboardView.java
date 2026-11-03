@@ -15,8 +15,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
@@ -31,17 +33,24 @@ import helium314.keyboard.keyboard.emoji.EmojiPageKeyboardView;
 import helium314.keyboard.keyboard.internal.KeyDrawParams;
 import helium314.keyboard.keyboard.internal.KeyVisualAttributes;
 import helium314.keyboard.keyboard.internal.keyboard_parser.floris.KeyCode;
+import helium314.keyboard.keyboard.raster.RasterRenderer;
+import helium314.keyboard.keyboard.raster.RasterTheme;
+import helium314.keyboard.keyboard.raster.TiltLight;
 import helium314.keyboard.latin.R;
 import helium314.keyboard.latin.common.ColorType;
 import helium314.keyboard.latin.common.Colors;
 import helium314.keyboard.latin.common.Constants;
 import helium314.keyboard.latin.common.StringUtilsKt;
+import helium314.keyboard.latin.settings.Defaults;
 import helium314.keyboard.latin.settings.Settings;
 import helium314.keyboard.latin.suggestions.MoreSuggestions;
 import helium314.keyboard.latin.suggestions.MoreSuggestionsView;
+import helium314.keyboard.latin.utils.KtxKt;
 import helium314.keyboard.latin.utils.TypefaceUtils;
 
 import java.util.HashSet;
+
+import kotlin.Unit;
 
 /** A view that renders a virtual {@link Keyboard}. */
 // todo: this ThemeStyle-dependent stuff really should not be in here!
@@ -99,6 +108,22 @@ public class KeyboardView extends View {
     private final Paint mPaint = new Paint();
     private final Paint.FontMetrics mFontMetrics = new Paint.FontMetrics();
 
+    // Raster theme: photoreal keys composed from theme images, main keyboard only
+    @Nullable
+    private RasterRenderer mRaster;
+    @Nullable private TiltLight mTilt;
+    private final Runnable mStartTilt = () -> {
+        if (mTilt != null && isShown()) mTilt.start();
+    };
+    private static final long TILT_START_DELAY_MS = 400;
+    private final Path mRasterArrowPath = new Path();
+    private final Paint mRasterChevronPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Rect mRasterDirty = new Rect();
+    private final Rect mRasterKeyRect = new Rect();
+    private final RectF mRasterCapRect = new RectF();
+    private final RectF mRasterIconRect = new RectF();
+    protected final Paint mRasterPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+
     public KeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.keyboardViewStyle);
     }
@@ -148,6 +173,26 @@ public class KeyboardView extends View {
 
         mPaint.setAntiAlias(true);
         setFitsSystemWindows(true);
+
+        if (this instanceof MainKeyboardView && Settings.getValues().mRasterTheme) {
+            try {
+                mRaster = new RasterRenderer(RasterTheme.get(context));
+                mRaster.setPrimaryColor(KtxKt.prefs(context).getInt(Settings.PREF_PRIMARY_COLOR, Defaults.PREF_PRIMARY_COLOR));
+            } catch (Exception e) {
+                mRaster = null; // broken theme assets: fall back to the normal drawing
+            }
+            if (mRaster != null && Settings.getValues().mTiltLight) {
+                mRaster.setMovableShadows(true);
+                mTilt = new TiltLight(context, (fx, fy) -> {
+                    onTilt(fx, fy);
+                    return Unit.INSTANCE;
+                });
+            }
+        }
+    }
+
+    protected boolean isRasterDrawing() {
+        return mRaster != null;
     }
 
     @Nullable
@@ -237,6 +282,10 @@ public class KeyboardView extends View {
     @Override
     protected void onDraw(@NonNull final Canvas canvas) {
         super.onDraw(canvas);
+        if (mRaster != null) {
+            onDrawRaster(canvas);
+            return;
+        }
         if (canvas.isHardwareAccelerated()) {
             onDrawKeyboard(canvas);
             return;
@@ -252,6 +301,184 @@ public class KeyboardView extends View {
             onDrawKeyboard(mOffscreenCanvas);
         }
         canvas.drawBitmap(mOffscreenBuffer, 0.0f, 0.0f, null);
+    }
+
+    private void onDrawRaster(@NonNull final Canvas canvas) {
+        final Keyboard keyboard = getKeyboard();
+        final int width = getWidth();
+        final int height = getHeight();
+        if (keyboard == null || width == 0 || height == 0) return;
+        final RasterRenderer raster = mRaster;
+        final float lightStrength = Settings.getValues().mKeyLightStrength;
+        final float rowsTop = getPaddingTop() + keyboard.mTopPadding;
+        final boolean panelChanged = raster.setSize(width, height, rowsTop, rowsTop + keyboard.mBaseHeight)
+                | raster.getLightStrength() != lightStrength;
+        if (panelChanged || mInvalidateAllKeys) {
+            raster.setLightStrength(lightStrength);
+            mRasterDirty.set(0, 0, width, height);
+            if (panelChanged && RasterRenderer.getOnPanelChanged() != null)
+                RasterRenderer.getOnPanelChanged().invoke(raster);
+        } else {
+            // a key repaints its cap and its shadow, which spills over its neighbours
+            for (final Key key : mInvalidatedKeys) {
+                raster.capRect(key, getPaddingLeft(), getPaddingTop(),
+                        keyboard.mMostCommonKeyWidth, keyboard.mMostCommonKeyHeight, mRasterCapRect);
+                raster.extent(mRasterCapRect, mRasterKeyRect);
+                mRasterDirty.union(mRasterKeyRect);
+            }
+        }
+        mInvalidatedKeys.clear();
+        mInvalidateAllKeys = false;
+        if (!mRasterDirty.isEmpty()) {
+            raster.render(keyboard.getSortedKeys(), mRasterDirty, getPaddingLeft(), getPaddingTop(),
+                    keyboard.mMostCommonKeyWidth, keyboard.mMostCommonKeyHeight, this::onDrawRasterKeyTop);
+            mRasterDirty.setEmpty();
+        }
+        raster.drawLit(canvas, raster.getOut(), 0);
+        raster.drawShadows(canvas);
+    }
+
+    /** Raster theme icon for this key, or null to draw its label. */
+    @Nullable
+    private static String rasterIconName(@NonNull final Key key) {
+        if (key.hasActionKeyBackground()) return "enter";
+        final String name = key.getIconName();
+        if (name == null || key.getLabel() != null) return null;
+        switch (name) {
+            case "shift_key": return "shift";
+            case "shift_key_shifted": return "shift_shifted";
+            case "shift_key_locked": return "shift_locked";
+            case "delete_key": return "delete";
+            case "emoji_normal_key":
+            case "emoji_action_key": return "emoji";
+            default: return null;
+        }
+    }
+
+    /** Text on the spacebar for the raster theme, null for none. */
+    @Nullable
+    protected String getRasterSpacebarText(@NonNull final Key key, @NonNull final Paint paint) {
+        return null;
+    }
+
+    // Draws a key's glyph the way the theme previews do: one character large in the skin colour,
+    // anything longer small and grey, icons as theme masks with side = cap height.
+    // The canvas is translated to the key, already shifted down for a pressed key.
+    private void onDrawRasterKeyTop(@NonNull final Key key, @NonNull final Canvas canvas, @NonNull final RectF cap,
+            @NonNull final RasterTheme.Skin skin, final boolean pressed) {
+        final float cx = cap.centerX();
+        final float cy = cap.centerY();
+        final float bh = cap.height();
+        final Paint paint = mRasterPaint;
+        paint.setTextScaleX(1f);
+        final String iconName = rasterIconName(key);
+        if (iconName != null) {
+            final int side = Math.round(bh);
+            final Bitmap mask = mRaster.icon(iconName, side);
+            if (mask != null) {
+                paint.setColor(skin.getLabel());
+                mRasterIconRect.set(cx - side / 2f, cy - side / 2f, cx + side / 2f, cy + side / 2f);
+                canvas.drawBitmap(mask, null, mRasterIconRect, paint);
+                return;
+            }
+        }
+        final int code = key.getCode();
+        if (code == KeyCode.ARROW_UP || code == KeyCode.ARROW_DOWN || code == KeyCode.ARROW_LEFT || code == KeyCode.ARROW_RIGHT) {
+            drawRasterArrow(canvas, code, cx, cy, 0.40f * bh, skin.getLabel());
+            return;
+        }
+        String label = key.getLabel();
+        final boolean single;
+        if (label == null && key.getCode() == Constants.CODE_SPACE) {
+            paint.setTextSize(0.28f * bh);
+            paint.setTypeface(Typeface.DEFAULT);
+            label = getRasterSpacebarText(key, paint);
+            single = false;
+        } else {
+            single = label != null && label.codePointCount(0, label.length()) == 1;
+        }
+        if (label == null || label.isEmpty()) {
+            // a key the theme has no glyph for: its normal icon, tinted like a label
+            final Keyboard keyboard = getKeyboard();
+            final Drawable icon = keyboard == null ? null : key.getIcon(keyboard.mIconsSet, Constants.Color.ALPHA_OPAQUE);
+            if (icon == null) return;
+            final int side = Math.round(bh * 0.4f);
+            icon.setColorFilter(skin.getLabel(), PorterDuff.Mode.SRC_IN);
+            drawIcon(canvas, icon, Math.round(cx - side / 2f), Math.round(cy - side / 2f), side, side);
+            return;
+        }
+        paint.setTypeface(KeyboardTypeface.resolve(label, Typeface.DEFAULT));
+        paint.setTextSize(single ? RasterTheme.get(getContext()).getLabelSize() * bh : 0.28f * bh);
+        paint.setColor(single ? skin.getLabel() : 0xFF8E8E92);
+        paint.setTextAlign(Align.CENTER);
+        final float maxWidth = cap.width() * MAX_LABEL_RATIO;
+        final float textWidth = paint.measureText(label);
+        if (textWidth > maxWidth) paint.setTextScaleX(maxWidth / textWidth);
+        // long-press symbol centred along the cap's top edge, the letter moved down to make room (Nick's layout).
+        // read the setting here: mShowsHints is only refreshed on the non-raster draw path
+        final String hint = single && Settings.getValues().mShowsHints ? key.getHintLabel() : null;
+        // centre of ascent..descent on the line 0.04 key heights above the cap centre, lower under a hint
+        paint.getFontMetrics(mFontMetrics);
+        final float labelY = hint == null ? cy - 0.04f * bh : cy + HINT_LABEL_SHIFT * bh;
+        canvas.drawText(label, cx, labelY - (mFontMetrics.ascent + mFontMetrics.descent) / 2f, paint);
+        paint.setTextScaleX(1f);
+        if (key.getCode() == Constants.CODE_SPACE
+                && Settings.getValues().mSpaceSwipeHorizontal == KeyboardActionListener.SwipeAction.SWITCH_LANGUAGE) {
+            // "‹ en/cs ›": the chevrons tell that a swipe along the space bar switches the language
+            drawRasterSpaceChevrons(canvas, cx, labelY, Math.min(textWidth, maxWidth) / 2f + 0.20f * bh, bh, paint.getColor());
+        }
+        if (hint != null) {
+            paint.setTypeface(KeyboardTypeface.resolve(hint, Typeface.DEFAULT));
+            paint.setTextSize(HINT_SIZE * bh * mHintFontSizeMultiplier);
+            paint.setColor(0xFF8E8E92);
+            paint.getFontMetrics(mFontMetrics);
+            canvas.drawText(hint, cx, cap.top + HINT_CENTER_Y * bh - (mFontMetrics.ascent + mFontMetrics.descent) / 2f, paint);
+        }
+    }
+
+    // Thin open chevrons at distance dx left and right of the centre, as tall as the label's capitals.
+    private void drawRasterSpaceChevrons(@NonNull final Canvas canvas, final float cx, final float cy,
+            final float dx, final float bh, final int color) {
+        final float half = 0.085f * bh;
+        final float depth = 0.05f * bh;
+        final Paint p = mRasterChevronPaint;
+        p.setColor(color);
+        p.setStyle(Paint.Style.STROKE);
+        p.setStrokeWidth(0.028f * bh);
+        p.setStrokeCap(Paint.Cap.ROUND);
+        p.setStrokeJoin(Paint.Join.ROUND);
+        final Path path = mRasterArrowPath;
+        path.reset();
+        path.moveTo(cx - dx + depth, cy - half); path.lineTo(cx - dx - depth, cy); path.lineTo(cx - dx + depth, cy + half);
+        path.moveTo(cx + dx - depth, cy - half); path.lineTo(cx + dx + depth, cy); path.lineTo(cx + dx - depth, cy + half);
+        canvas.drawPath(path, p);
+    }
+
+    // raster hint layout, in cap heights: symbol size, its centre below the cap top, letter centre below the cap centre
+    private static final float HINT_SIZE = 0.26f;
+    private static final float HINT_CENTER_Y = 0.22f;
+    private static final float HINT_LABEL_SHIFT = 0.10f;
+
+    // Solid triangle as in the preview (the ▲▼◀▶ glyphs at 0.40 key heights): about 0.86 of the size wide,
+    // 0.70 tall for up / down, 0.78 for left / right, centred on the cap.
+    private void drawRasterArrow(@NonNull final Canvas canvas, final int code, final float cx, final float cy,
+            final float size, final int color) {
+        final float half = 0.43f * size;
+        final boolean vertical = code == KeyCode.ARROW_UP || code == KeyCode.ARROW_DOWN;
+        final float depth = (vertical ? 0.70f : 0.78f) * size / 2f;
+        final Path path = mRasterArrowPath;
+        path.reset();
+        switch (code) {
+            case KeyCode.ARROW_UP: path.moveTo(cx, cy - depth); path.lineTo(cx + half, cy + depth); path.lineTo(cx - half, cy + depth); break;
+            case KeyCode.ARROW_DOWN: path.moveTo(cx, cy + depth); path.lineTo(cx - half, cy - depth); path.lineTo(cx + half, cy - depth); break;
+            case KeyCode.ARROW_LEFT: path.moveTo(cx - depth, cy); path.lineTo(cx + depth, cy - half); path.lineTo(cx + depth, cy + half); break;
+            default: path.moveTo(cx + depth, cy); path.lineTo(cx - depth, cy + half); path.lineTo(cx - depth, cy - half); break;
+        }
+        path.close();
+        final Paint paint = mRasterPaint;
+        paint.setColor(color);
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawPath(path, paint);
     }
 
     private boolean maybeAllocateOffscreenBuffer() {
@@ -428,7 +655,7 @@ public class KeyboardView extends View {
             if (key.isEnabled()) {
                 if (StringUtilsKt.isEmoji(label))
                     paint.setColor(key.selectTextColor(params) | 0xFF000000); // ignore alpha for emojis (though actually color isn't applied anyway and we could just set white)
-                else if (key.hasActionKeyBackground())
+                else if (key.hasActionKeyBackground() || drawsKeysOnAccent())
                     paint.setColor(mColors.get(ColorType.ACTION_KEY_ICON));
                 else if (this instanceof EmojiPageKeyboardView)
                     paint.setColor(mColors.get(ColorType.EMOJI_KEY_TEXT));
@@ -629,14 +856,39 @@ public class KeyboardView extends View {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         freeOffscreenBuffer();
+        if (mTilt != null) {
+            removeCallbacks(mStartTilt);
+            mTilt.stop();
+        }
+    }
+
+    // the tilt sensor only runs while the keyboard is on screen, and starts after it has opened
+    @Override
+    protected void onWindowVisibilityChanged(final int visibility) {
+        super.onWindowVisibilityChanged(visibility);
+        if (mTilt == null) return;
+        removeCallbacks(mStartTilt);
+        if (visibility == VISIBLE) postDelayed(mStartTilt, TILT_START_DELAY_MS);
+        else mTilt.stop();
+    }
+
+    private void onTilt(final float fx, final float fy) {
+        if (!mRaster.setTilt(fx, fy)) return;
+        invalidate();
+        if (RasterRenderer.getOnTiltChanged() != null) RasterRenderer.getOnTiltChanged().invoke();
     }
 
     public void deallocateMemory() {
         freeOffscreenBuffer();
     }
 
+    /** Keys sit on accent-filled buttons, so labels and icons go white like on the action key. */
+    protected boolean drawsKeysOnAccent() {
+        return false;
+    }
+
     private void setKeyIconColor(Key key, Drawable icon, Keyboard keyboard) {
-        if (key.hasActionKeyBackground()) {
+        if (key.hasActionKeyBackground() || drawsKeysOnAccent()) {
             mColors.setColor(icon, ColorType.ACTION_KEY_ICON);
         } else if (key.isShift() && keyboard != null) {
             if (keyboard.mId.getElement().isAlphabetShifted())

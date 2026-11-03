@@ -551,4 +551,13 @@
     <string name="space_swipe_toggle_dpad_entry">Перемикати D-pad</string>
     <string name="recent_emojis_cleared">Очищені недавні емодзі</string>
     <string name="show_dpad_key">Клавіша D-Pad</string>
+    <string name="raster_theme">Фотореалістичні клавіші</string>
+    <string name="raster_theme_summary">Малювати клавіші з картинок теми Graphite</string>
+    <string name="key_light_strength">Світло на клавішах</string>
+    <string name="tilt_light">Світло від нахилу</string>
+    <string name="tilt_light_summary">Відблиски й тіні клавіш рухаються, коли нахиляєш телефон</string>
+    <string name="voice_input_unavailable">Голосове введення на цьому телефоні недоступне</string>
+    <string name="voice_input_language_unsupported">Голосове введення поки не знає цю мову</string>
+    <string name="voice_input_permission_granted">Мікрофон дозволено. Натисни на мікрофон і говори</string>
+    <string name="voice_input_permission_denied">Для голосового введення потрібен мікрофон. Дозволь його в налаштуваннях застосунку</string>
 </resources>

@@ -39,6 +39,7 @@ import helium314.keyboard.settings.initPreview
 import helium314.keyboard.settings.preferences.BackgroundImagePref
 import helium314.keyboard.settings.preferences.CustomFontPreference
 import helium314.keyboard.settings.preferences.KeyboardScalePreference
+import helium314.keyboard.settings.preferences.PrimaryColorPreference
 import helium314.keyboard.settings.preferences.TextInputPreference
 import helium314.keyboard.latin.utils.previewDark
 import androidx.core.content.edit
@@ -58,6 +59,13 @@ fun AppearanceScreen(
     val dayNightMode = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && prefs.getBoolean(Settings.PREF_THEME_DAY_NIGHT, Defaults.PREF_THEME_DAY_NIGHT)
     val items = listOf(
         R.string.settings_screen_theme,
+        Settings.PREF_RASTER_THEME,
+        if (prefs.getBoolean(Settings.PREF_RASTER_THEME, Defaults.PREF_RASTER_THEME))
+            Settings.PREF_PRIMARY_COLOR else null,
+        if (prefs.getBoolean(Settings.PREF_RASTER_THEME, Defaults.PREF_RASTER_THEME))
+            Settings.PREF_KEY_LIGHT_STRENGTH else null,
+        if (prefs.getBoolean(Settings.PREF_RASTER_THEME, Defaults.PREF_RASTER_THEME))
+            Settings.PREF_TILT_LIGHT else null,
         Settings.PREF_THEME_STYLE,
         Settings.PREF_ICON_STYLE,
         Settings.PREF_ACCENT_SHIFTED_ICON,
@@ -193,6 +201,24 @@ fun createAppearanceSettings(context: Context) = listOf(
                 isNight = true,
                 default = Defaults.PREF_THEME_COLORS_NIGHT
             )
+    },
+    Setting(context, Settings.PREF_RASTER_THEME, R.string.raster_theme, R.string.raster_theme_summary) {
+        SwitchPreference(it, Defaults.PREF_RASTER_THEME) { KeyboardSwitcher.getInstance().setThemeNeedsReload() }
+    },
+    Setting(context, Settings.PREF_PRIMARY_COLOR, R.string.primary_color, R.string.primary_color_summary) {
+        PrimaryColorPreference(it)
+    },
+    Setting(context, Settings.PREF_KEY_LIGHT_STRENGTH, R.string.key_light_strength) { setting ->
+        SliderPreference(
+            name = setting.title,
+            key = setting.key,
+            default = Defaults.PREF_KEY_LIGHT_STRENGTH,
+            range = 0f..1.5f,
+            description = { "${(100 * it).toInt()}%" }
+        ) { KeyboardSwitcher.getInstance().setThemeNeedsReload() }
+    },
+    Setting(context, Settings.PREF_TILT_LIGHT, R.string.tilt_light, R.string.tilt_light_summary) {
+        SwitchPreference(it, Defaults.PREF_TILT_LIGHT) { KeyboardSwitcher.getInstance().setThemeNeedsReload() }
     },
     Setting(context, Settings.PREF_THEME_KEY_BORDERS, R.string.key_borders) {
         SwitchPreference(it, Defaults.PREF_THEME_KEY_BORDERS) { KeyboardSwitcher.getInstance().setThemeNeedsReload() }

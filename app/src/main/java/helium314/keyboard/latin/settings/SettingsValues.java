@@ -139,6 +139,9 @@ public class SettingsValues {
     public final EnumSet<KeyboardState.Mode> mAlphaAfterSpace = EnumSet.noneOf(KeyboardState.Mode.class);
     public final boolean mRemoveRedundantPopups;
     public final String mSpaceBarText;
+    public final boolean mRasterTheme;
+    public final float mKeyLightStrength;
+    public final boolean mTiltLight;
     public final float mFontSizeMultiplier;
     public final float mHintFontSizeMultiplier;
     public final float mFontSizeMultiplierEmoji;
@@ -335,6 +338,9 @@ public class SettingsValues {
         }
         mRemoveRedundantPopups = prefs.getBoolean(Settings.PREF_REMOVE_REDUNDANT_POPUPS, Defaults.PREF_REMOVE_REDUNDANT_POPUPS);
         mSpaceBarText = prefs.getString(Settings.PREF_SPACE_BAR_TEXT, Defaults.PREF_SPACE_BAR_TEXT);
+        mRasterTheme = prefs.getBoolean(Settings.PREF_RASTER_THEME, Defaults.PREF_RASTER_THEME);
+        mKeyLightStrength = prefs.getFloat(Settings.PREF_KEY_LIGHT_STRENGTH, Defaults.PREF_KEY_LIGHT_STRENGTH);
+        mTiltLight = prefs.getBoolean(Settings.PREF_TILT_LIGHT, Defaults.PREF_TILT_LIGHT);
         mFontSizeMultiplier = prefs.getFloat(Settings.PREF_FONT_SCALE, Defaults.PREF_FONT_SCALE);
         mHintFontSizeMultiplier = mShowsHints ? prefs.getFloat(Settings.PREF_HINT_FONT_SCALE, Defaults.PREF_HINT_FONT_SCALE) : 1;
         mFontSizeMultiplierEmoji = prefs.getFloat(Settings.PREF_EMOJI_FONT_SCALE, Defaults.PREF_EMOJI_FONT_SCALE);

@@ -62,6 +62,21 @@ class KeyboardParser(private val params: KeyboardParams, private val context: Co
         }
         val baseKeys = LayoutParser.parseLayout(layoutType, params, context)
         val keysInRows = createRows(baseKeys)
+        if (Settings.getValues().mRasterTheme && params.mId.element.isAlphaOrSymbol && params.mId.element.takesFunctionalKeys) {
+            // photoreal theme: the board it was painted for, arrow row included, with its own row pitches
+            // (reference px: number row 123, other rows 156, arrow row 110), so the light falls on the keys as painted
+            keysInRows.add(arrayListOf("up", "down", "left", "right").mapTo(ArrayList()) {
+                TextKeyData(label = it, width = 0.25f).toKeyParams(params)
+            })
+            val pitches = keysInRows.indices.map { i -> when {
+                i == keysInRows.lastIndex -> 110f
+                i == 0 && params.mId.numberRowEnabled -> 123f
+                else -> 156f
+            } }
+            val total = pitches.sum()
+            keysInRows.forEachIndexed { i, row -> row.forEach { it.mHeight = pitches[i] / total } }
+            return keysInRows
+        }
         val heightRescale: Float
         if (params.mId.element.isBottomRow) {
             heightRescale = 4f

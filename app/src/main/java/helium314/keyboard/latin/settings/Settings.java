@@ -193,6 +193,11 @@ public final class Settings implements SharedPreferences.OnSharedPreferenceChang
     public static final String PREF_ABC_AFTER_NUMPAD_SPACE = "abc_after_numpad_space";
     public static final String PREF_REMOVE_REDUNDANT_POPUPS = "remove_redundant_popups";
     public static final String PREF_SPACE_BAR_TEXT = "space_bar_text";
+    public static final String PREF_RASTER_THEME = "raster_theme";
+    public static final String PREF_KEY_LIGHT_STRENGTH = "key_light_strength";
+    public static final String PREF_PRIMARY_COLOR = "primary_color";
+    public static final String PREF_TILT_LIGHT = "tilt_light";
+    public static final String PREF_SHOW_ADVANCED_SETTINGS = "show_advanced_settings";
     public static final String PREF_TIMESTAMP_FORMAT = "timestamp_format";
     public static final String PREF_TOOLBAR_MODE = "toolbar_mode";
     public static final String PREF_TOOLBAR_HIDING_GLOBAL = "toolbar_hiding_global";

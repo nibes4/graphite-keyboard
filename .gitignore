@@ -15,3 +15,9 @@ tools/*.txt
 *.patch
 *.diff
 *.sh
+_spare_dicts/
+# Google's proprietary gesture library: personal builds only, never published
+app/src/debug/jniLibs/
+app/src/debugNoMinify/jniLibs/
+# store graphics, captures and site live outside the source release
+play/

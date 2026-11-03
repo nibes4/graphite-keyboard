@@ -1,4 +1,5 @@
 import com.android.build.api.variant.ApplicationVariant
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -22,12 +23,28 @@ android {
         proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
 
+    // Play upload key lives next to the repo, not in it: the source is public under GPL, the key never is
+    val uploadDir = rootProject.file("../keyboard-signing")
+    val uploadProps = Properties().apply {
+        val f = File(uploadDir, "upload.properties")
+        if (f.exists()) f.inputStream().use { load(it) }
+    }
+    signingConfigs {
+        if (!uploadProps.isEmpty) create("upload") {
+            storeFile = File(uploadDir, uploadProps.getProperty("storeFile"))
+            storePassword = uploadProps.getProperty("storePassword")
+            keyAlias = uploadProps.getProperty("keyAlias")
+            keyPassword = uploadProps.getProperty("keyPassword")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
             isShrinkResources = false
             isDebuggable = false
             isJniDebuggable = false
+            if (!uploadProps.isEmpty) signingConfig = signingConfigs.getByName("upload")
         }
         create("nouserlib") { // same as release, but does not allow the user to provide a library
             isMinifyEnabled = true
@@ -64,9 +81,16 @@ android {
                 variant.proguardFiles.add(project.layout.buildDirectory.file(project.buildFile.parent + "/dontoptimize.pro"))
                 variant.proguardFiles.add(project.layout.buildDirectory.file(project.buildFile.parent + "/proguard-rules.pro"))
             }
+            if (variant.buildType == "release") {
+                // Graphite's own id on Google Play (helium314.keyboard belongs to HeliBoard).
+                // The Google swipe library sits in src/debug only, so it never reaches this build.
+                variant.applicationId.set("design.nibes.graphite")
+                variant.outputs.forEach { it.versionName.set("1.0.0"); it.versionCode.set(1) }
+            }
             variant.outputs.forEach { output ->
                 if (output is com.android.build.api.variant.impl.VariantOutputImpl) {
-                    output.outputFileName = "HeliBoard_${defaultConfig.versionName}-${variant.buildType}.apk"
+                    output.outputFileName = if (variant.buildType == "release") "Graphite-release.apk"
+                        else "HeliBoard_${defaultConfig.versionName}-${variant.buildType}.apk"
                 }
             }
         }

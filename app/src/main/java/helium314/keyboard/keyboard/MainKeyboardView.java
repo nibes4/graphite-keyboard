@@ -723,6 +723,26 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         }
     }
 
+    @Nullable
+    @Override
+    protected String getRasterSpacebarText(@NonNull final Key key, @NonNull final Paint paint) {
+        final Keyboard keyboard = getKeyboard();
+        if (keyboard == null) return null;
+        final String customText = Settings.getValues().mSpaceBarText;
+        if (!customText.isEmpty()) return customText;
+        // as in the theme previews: "cs/en" when typing in several languages, else the language's own name
+        final RichInputMethodSubtype subtype = keyboard.mId.getSubtype();
+        final String main = subtype.getLocale().getLanguage();
+        final List<Locale> others = withoutDuplicateLanguages(Settings.getValues().mSecondaryLocales, main);
+        if (others.isEmpty()) {
+            final String name = subtype.getLocale().getDisplayLanguage(subtype.getLocale());
+            return name.isEmpty() ? null : name.substring(0, 1).toUpperCase(subtype.getLocale()) + name.substring(1);
+        }
+        final StringBuilder sb = new StringBuilder(main);
+        for (final Locale locale : others) sb.append('/').append(locale.getLanguage());
+        return sb.toString();
+    }
+
     private boolean fitsTextIntoWidth(final int width, final String text, final Paint paint) {
         final int maxTextWidth = width - mLanguageOnSpacebarHorizontalMargin * 2;
         paint.setTextScaleX(1.0f);

@@ -14,6 +14,9 @@ fun isDarkColor(@ColorInt color: Int) =
     if (android.R.color.transparent == color) true
     else getBrightnessSquared(color) < 50 * 50
 
+/** White glyphs on [color] would be hard to read (yellow, mint, light pastels), dark ones should be used. */
+fun needsDarkGlyphs(@ColorInt color: Int) = getBrightnessSquared(color) >= 180 * 180
+
 fun isGoodContrast(@ColorInt color1: Int, @ColorInt color2: Int) =
     colorDistanceSquared(color1, color2) > 80 * 80
 

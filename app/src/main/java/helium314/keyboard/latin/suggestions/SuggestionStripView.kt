@@ -31,6 +31,7 @@ import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import helium314.keyboard.event.HapticEvent
 import helium314.keyboard.keyboard.KeyboardSwitcher
+import helium314.keyboard.keyboard.raster.RasterRenderer
 import helium314.keyboard.keyboard.internal.KeyboardIconsSet
 import helium314.keyboard.keyboard.internal.keyboard_parser.floris.KeyCode
 import helium314.keyboard.latin.AudioAndHapticFeedbackManager
@@ -510,6 +511,16 @@ class SuggestionStripView(context: Context, attrs: AttributeSet?, defStyle: Int)
         pinnedKeys.findViewWithTag<View>(ToolbarKey.VOICE)?.isVisible = show
     }
 
+    /** While dictating, the mic glows in the accent color, so it is clear the keyboard is listening. */
+    fun setVoiceListening(listening: Boolean) {
+        val colors = Settings.getValues().mColors
+        listOfNotNull(toolbar.findViewWithTag<ImageButton>(ToolbarKey.VOICE),
+                pinnedKeys.findViewWithTag<ImageButton>(ToolbarKey.VOICE)).forEach {
+            if (listening) it.setColorFilter(colors.get(ColorType.ACTION_KEY_BACKGROUND))
+            else it.clearColorFilter() // TOOL_BAR_KEY tints the drawable, not the filter
+        }
+    }
+
     private fun updateKeys() {
         updateVoiceKey()
         val settingsValues = Settings.getValues()
@@ -550,6 +561,21 @@ class SuggestionStripView(context: Context, attrs: AttributeSet?, defStyle: Int)
         (view.layoutParams as LinearLayout.LayoutParams).weight = 1f
         colors.setColor(view, ColorType.TOOL_BAR_KEY)
         colors.setBackground(view, ColorType.STRIP_BACKGROUND)
+        if (Settings.getValues().mRasterTheme) view.background = null
+    }
+
+    // Photoreal theme: the strip is the top of the same lit panel as the keys, as in the theme preview,
+    // so the board has no seam. The keyboard view hands over its renderer whenever size or light change.
+    init {
+        if (Settings.getValues().mRasterTheme) {
+            wordViews.forEach { it.background = null }
+            toolbarExpandKey.background = null
+            RasterRenderer.onPanelChanged = { raster ->
+                if (height > 0) background = raster.stripDrawable(height)
+                else doOnNextLayout { background = raster.stripDrawable(height) }
+            }
+            RasterRenderer.onTiltChanged = { invalidate() }
+        }
     }
 
     companion object {

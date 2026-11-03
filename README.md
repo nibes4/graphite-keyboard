@@ -1,3 +1,11 @@
+# Graphite
+
+Graphite is a dark keyboard with lit keys, built on HeliBoard. This repository is the complete source of the Graphite app on Google Play (`design.nibes.graphite`), published under the same GPL-3.0 license.
+
+Changes against HeliBoard (2026-10 and 2026-11): raster key theme with a tilt-driven light, accent colour presets, new settings and onboarding screens, voice input through the system speech recognizer, typing defaults (autocorrect off, auto space after punctuation), English, Czech, Russian and Ukrainian dictionaries only. Upstream: https://github.com/HeliBorg/HeliBoard
+
+The original HeliBoard readme follows.
+
 # HeliBoard
 HeliBoard is a privacy-conscious and customizable open-source keyboard, based on AOSP / OpenBoard.
 Does not use internet permission, and thus is 100% offline.

@@ -1,0 +1,96 @@
+{
+ "name": "Raycast Dark",
+ "format": 1,
+ "scale": 2,
+ "cap_inset": [
+  5,
+  10
+ ],
+ "background": "background.png",
+ "lighting": {
+  "image": "lighting.png",
+  "blend": "multiply",
+  "gain": 1.15
+ },
+ "label_font": "arial.ttf",
+ "label_size": 0.52,
+ "label_lighting": 0.85,
+ "grain": {
+  "image": "grain.png",
+  "blend": "overlay",
+  "tile": true,
+  "gain": 1.0,
+  "size": 1.5
+ },
+ "keys": {
+  "letter": {
+   "normal": "letter.png",
+   "pressed": "letter_pressed.png",
+   "shadow": "letter_shadow.png",
+   "pressed_shadow": "letter_pressed_shadow.png",
+   "inset": 10,
+   "shadow_inset": 62,
+   "label": "#C2C2C4",
+   "lighting": 1.0
+  },
+  "modifier": {
+   "normal": "modifier.png",
+   "pressed": "modifier_pressed.png",
+   "shadow": "modifier_shadow.png",
+   "pressed_shadow": "modifier_pressed_shadow.png",
+   "inset": 10,
+   "shadow_inset": 62,
+   "label": "#C2C2C4",
+   "lighting": 1.0
+  },
+  "enter": {
+   "normal": "enter.png",
+   "pressed": "enter_pressed.png",
+   "shadow": "enter_shadow.png",
+   "pressed_shadow": "enter_pressed_shadow.png",
+   "inset": 10,
+   "shadow_inset": 62,
+   "label": "#FFFFFF",
+   "lighting": 0.12
+  }
+ },
+ "cap_grain": {
+  "image": "cap_grain.png",
+  "blend": "add",
+  "strength": 0.208
+ },
+ "rows": {
+  "2115": [
+   2109,
+   2202
+  ],
+  "1986": [
+   1953,
+   2092
+  ],
+  "1857": [
+   1797,
+   1936
+  ],
+  "1729": [
+   1641,
+   1780
+  ],
+  "1600": [
+   1485,
+   1624
+  ],
+  "1490": [
+   1362,
+   1468
+  ]
+ },
+ "panel": {
+  "height": 956,
+  "keys": [
+   97.5,
+   954.5
+  ]
+ },
+ "shadow_opacity": 0.6
+}

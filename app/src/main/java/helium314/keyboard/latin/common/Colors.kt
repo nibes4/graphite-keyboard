@@ -32,6 +32,7 @@ import helium314.keyboard.latin.utils.brightenOrDarken
 import helium314.keyboard.latin.utils.darken
 import helium314.keyboard.latin.utils.isBrightColor
 import helium314.keyboard.latin.utils.isDarkColor
+import helium314.keyboard.latin.utils.needsDarkGlyphs
 import java.util.EnumMap
 import androidx.core.graphics.drawable.toDrawable
 import helium314.keyboard.latin.settings.Defaults
@@ -470,7 +471,7 @@ class DefaultColors (
         actionKeyIconColorFilter = when {
             themeStyle == STYLE_HOLO -> keyTextFilter
             // the white icon may not have enough contrast, and can't be adjusted by the user
-            isBrightColor(accent) -> colorFilter(Color.DKGRAY)
+            needsDarkGlyphs(accent) -> colorFilter(Color.DKGRAY)
             else -> null
         }
     }
@@ -495,7 +496,7 @@ class DefaultColors (
         NAVIGATION_BAR -> navBar
         SUGGESTION_AUTO_CORRECT, EMOJI_CATEGORY, TOOL_BAR_KEY, TOOL_BAR_EXPAND_KEY, ONE_HANDED_MODE_BUTTON -> suggestionText
         MORE_SUGGESTIONS_HINT, SUGGESTED_WORD, SUGGESTION_TYPED_WORD, SUGGESTION_VALID_WORD -> adjustedSuggestionText
-        ACTION_KEY_ICON -> Color.WHITE
+        ACTION_KEY_ICON -> if (themeStyle != STYLE_HOLO && needsDarkGlyphs(accent)) Color.DKGRAY else Color.WHITE
     }
 
     override fun setColor(drawable: Drawable, color: ColorType) {

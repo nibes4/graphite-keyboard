@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -18,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
 
 import helium314.keyboard.accessibility.AccessibilityUtils;
 import helium314.keyboard.accessibility.PopupKeysKeyboardAccessibilityDelegate;
@@ -26,7 +28,10 @@ import helium314.keyboard.keyboard.internal.keyboard_parser.floris.KeyCode;
 import helium314.keyboard.latin.R;
 import helium314.keyboard.latin.RichInputMethodManager;
 import helium314.keyboard.latin.common.Constants;
+import helium314.keyboard.latin.common.ColorType;
 import helium314.keyboard.latin.common.CoordinateUtils;
+import helium314.keyboard.latin.settings.Settings;
+import helium314.keyboard.latin.suggestions.MoreSuggestionsView;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
@@ -63,6 +68,38 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
         popupKeysKeyboardViewAttr.recycle();
         mKeyDetector = new PopupKeysDetector(getResources().getDimension(
                 R.dimen.config_popup_keys_keyboard_slide_allowance));
+        // the suggestion list is a popup too, but it keeps its own look
+        mAccentButtons = Settings.getValues().mRasterTheme && !(this instanceof MoreSuggestionsView);
+        final float density = getResources().getDisplayMetrics().density;
+        mButtonInset = 3 * density;
+        mButtonRadius = 9 * density;
+        mButtonPaint.setShadowLayer(3 * density, 0, 1.5f * density, 0x66000000);
+    }
+
+    // With the raster theme every popup key is its own rounded button in the accent color,
+    // on a transparent panel, instead of the flat theme drawables.
+    private final boolean mAccentButtons;
+    private final float mButtonInset;
+    private final float mButtonRadius;
+    private final Paint mButtonPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    @Override
+    protected boolean drawsKeysOnAccent() {
+        return mAccentButtons;
+    }
+
+    @Override
+    protected void onDrawKeyBackground(@NonNull final Key key, @NonNull final Canvas canvas,
+            @NonNull final Drawable background) {
+        if (!mAccentButtons) {
+            super.onDrawKeyBackground(key, canvas, background);
+            return;
+        }
+        final int accent = Settings.getValues().mColors.get(ColorType.ACTION_KEY_BACKGROUND);
+        // the key under the finger is lighter, so it is clear which one will be typed
+        mButtonPaint.setColor(key.isPressed() ? ColorUtils.blendARGB(accent, Color.WHITE, 0.3f) : accent);
+        canvas.drawRoundRect(mButtonInset, mButtonInset, key.getDrawWidth() - mButtonInset,
+                key.getHeight() - mButtonInset, mButtonRadius, mButtonRadius, mButtonPaint);
     }
 
     @Override
@@ -97,6 +134,7 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
     @Override
     public void setKeyboard(@NonNull final Keyboard keyboard) {
         super.setKeyboard(keyboard);
+        if (mAccentButtons) setBackgroundColor(Color.TRANSPARENT); // keeps the padding, unlike null
         mKeyDetector.setKeyboard(
                 keyboard, -getPaddingLeft(), -getPaddingTop() + getVerticalCorrection());
         if (AccessibilityUtils.Companion.getInstance().isAccessibilityEnabled()) {

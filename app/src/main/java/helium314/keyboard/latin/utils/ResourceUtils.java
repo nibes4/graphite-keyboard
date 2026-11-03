@@ -72,6 +72,13 @@ public final class ResourceUtils {
         if (settingsValues.mIsFloatingKeyboard) {
             return settingsValues.mFloatingHeight;
         }
+        final DisplayMetrics dm = res.getDisplayMetrics();
+        if (settingsValues.mRasterTheme && dm.widthPixels < dm.heightPixels) {
+            // photoreal theme: rows as tall as on the board it was painted for (reference px per 1080 wide,
+            // arrow row included), so caps keep their painted proportions
+            final float rows = settingsValues.mShowsNumberRow ? 857f : 734f;
+            return (int) (dm.widthPixels * rows / 1080f * settingsValues.mKeyboardHeightScale);
+        }
         int defaultKeyboardHeight = getDefaultKeyboardHeight(res, settingsValues.mShowsNumberRow);
         return (int)(defaultKeyboardHeight * settingsValues.mKeyboardHeightScale);
     }

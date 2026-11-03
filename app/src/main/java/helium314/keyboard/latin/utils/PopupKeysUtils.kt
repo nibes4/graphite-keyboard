@@ -27,7 +27,11 @@ fun createPopupKeysArray(popupSet: PopupSet<*>?, params: KeyboardParams, label: 
     // often PopupKeys are empty, so we want to avoid unnecessarily creating sets
     val popupKeysDelegate = lazy { mutableSetOf<String>() }
     val popupKeys by popupKeysDelegate
-    val types = if (params.mId.element.isAlphabet) params.mPopupKeyOrder else allPopupKeyTypes
+    val order = if (params.mId.element.isAlphabet) params.mPopupKeyOrder else allPopupKeyTypes
+    // without the number row the digit is what a long-press is for, so it goes first (under the finger)
+    val types = if (params.mId.element.isAlphabet && !params.mId.numberRowEnabled && POPUP_KEYS_NUMBER in order)
+        listOf(POPUP_KEYS_NUMBER) + (order - POPUP_KEYS_NUMBER)
+    else order
     types.forEach { type ->
         when (type) {
             POPUP_KEYS_NUMBER -> popupSet?.numberLabel?.let { popupKeys.add(it) }

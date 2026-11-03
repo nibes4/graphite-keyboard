@@ -20,7 +20,8 @@ public final class InputTypeUtils implements InputType {
         InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
         InputType.TYPE_TEXT_VARIATION_PASSWORD,
         InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,
-        InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD };
+        InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD,
+        InputType.TYPE_TEXT_VARIATION_URI }; // Graphite: no automatic spaces in address bars
     public static final int IME_ACTION_CUSTOM_LABEL = EditorInfo.IME_MASK_ACTION + 1;
 
     private InputTypeUtils() {

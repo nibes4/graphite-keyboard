@@ -550,4 +550,16 @@
     <string name="recent_emojis_cleared">Недавние эмодзи очищены</string>
     <string name="prefs_enable_hardware_keyboard">Поддержка аппаратной клавиатуры</string>
     <string name="accent_shifted_icon">Акцентный цвет значка Shift</string>
+    <string name="raster_theme">Фотореалистичные клавиши</string>
+    <string name="raster_theme_summary">Рисовать клавиши из картинок темы Graphite</string>
+    <string name="key_light_strength">Свет на клавишах</string>
+    <string name="tilt_light">Свет от наклона</string>
+    <string name="tilt_light_summary">Блики и тени клавиш двигаются, когда наклоняешь телефон</string>
+    <string name="primary_color">Основной цвет</string>
+    <string name="primary_color_summary">Enter, попапы долгого нажатия и микрофон</string>
+    <string name="primary_color_custom">Свой цвет…</string>
+    <string name="voice_input_unavailable">Голосовой ввод на этом телефоне недоступен</string>
+    <string name="voice_input_language_unsupported">Голосовой ввод пока не знает этот язык</string>
+    <string name="voice_input_permission_granted">Микрофон разрешён. Нажми на микрофон и говори</string>
+    <string name="voice_input_permission_denied">Для голосового ввода нужен микрофон. Разреши его в настройках приложения</string>
 </resources>

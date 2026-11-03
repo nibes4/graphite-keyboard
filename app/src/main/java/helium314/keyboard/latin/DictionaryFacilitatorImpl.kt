@@ -505,17 +505,19 @@ class DictionaryFacilitatorImpl : DictionaryFacilitator {
         val proximityInfoHandle = keyboard.proximityInfo.nativeProximityInfo
         val weightOfLangModelVsSpatialModel = floatArrayOf(Dictionary.NOT_A_WEIGHT_OF_LANG_MODEL_VS_SPATIAL_MODEL)
 
-        val waitForOtherDicts = if (dictionaryGroups.size == 1) null else CountDownLatch(dictionaryGroups.size - 1)
-        val suggestionsArray = Array<List<SuggestedWordInfo>?>(dictionaryGroups.size) { null }
-        for (i in 1..dictionaryGroups.lastIndex) {
+        // one snapshot: a language switch replaces dictionaryGroups while the coroutines below still run
+        val groups = dictionaryGroups
+        val waitForOtherDicts = if (groups.size == 1) null else CountDownLatch(groups.size - 1)
+        val suggestionsArray = Array<List<SuggestedWordInfo>?>(groups.size) { null }
+        for (i in 1..groups.lastIndex) {
             scope.launch {
                 suggestionsArray[i] = getSuggestions(composedData, ngramContext, settingsValuesForSuggestion, sessionId,
-                    proximityInfoHandle, weightOfLangModelVsSpatialModel, dictionaryGroups[i])
+                    proximityInfoHandle, weightOfLangModelVsSpatialModel, groups[i])
                 waitForOtherDicts?.countDown()
             }
         }
         suggestionsArray[0] = getSuggestions(composedData, ngramContext, settingsValuesForSuggestion, sessionId,
-            proximityInfoHandle, weightOfLangModelVsSpatialModel, dictionaryGroups[0])
+            proximityInfoHandle, weightOfLangModelVsSpatialModel, groups[0])
         val suggestionResults = SuggestionResults(
             SuggestedWords.MAX_SUGGESTIONS, ngramContext, false
         )

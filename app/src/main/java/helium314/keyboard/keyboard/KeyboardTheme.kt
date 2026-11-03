@@ -52,6 +52,7 @@ private constructor(val themeId: Int, @JvmField val mStyleId: Int) {
         const val THEME_LIGHT = "light"
         const val THEME_HOLO_WHITE = "holo_white"
         const val THEME_DARK = "dark"
+        const val THEME_RAYCAST = "raycast"
         const val THEME_DARKER = "darker"
         const val THEME_BLACK = "black"
         const val THEME_DYNAMIC = "dynamic"
@@ -66,6 +67,7 @@ private constructor(val themeId: Int, @JvmField val mStyleId: Int) {
         const val THEME_SAND = "sand"
         const val THEME_VIOLETTE = "violette"
         fun getAvailableDefaultColors(prefs: SharedPreferences, isNight: Boolean) = listOfNotNull(
+            THEME_RAYCAST,
             if (!isNight) THEME_LIGHT else null, THEME_DARK,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) THEME_DYNAMIC else null,
             if (prefs.getString(Settings.PREF_THEME_STYLE, Defaults.PREF_THEME_STYLE) == STYLE_HOLO) THEME_HOLO_WHITE else null,
@@ -162,6 +164,19 @@ private constructor(val themeId: Int, @JvmField val mStyleId: Int) {
                     ContextCompat.getColor(context, R.color.key_background_normal_lxx_light_border),
                     ContextCompat.getColor(context, R.color.key_text_color_lxx_light),
                     ContextCompat.getColor(context, R.color.key_hint_letter_color_lxx_light),
+                    keyboardBackground = backgroundImage
+                )
+                // strip and popups next to the raster keys: plate colour, skin label colours, Enter cyan
+                THEME_RAYCAST -> DefaultColors(
+                    themeStyle,
+                    false,
+                    prefs.getInt(Settings.PREF_PRIMARY_COLOR, Defaults.PREF_PRIMARY_COLOR),
+                    "#242424".toColorInt(),
+                    "#3A3A3C".toColorInt(),
+                    "#2E2E30".toColorInt(),
+                    "#3A3A3C".toColorInt(),
+                    "#C2C2C4".toColorInt(),
+                    "#8E8E92".toColorInt(),
                     keyboardBackground = backgroundImage
                 )
                 THEME_DARK -> DefaultColors(

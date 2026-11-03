@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Graphite settings redesign. Russian copy (values-ru) is the approved mockup text; English is its translation. -->
+<resources>
+    <string name="g_search">Search settings</string>
+    <string name="g_search_close">Close search</string>
+    <string name="g_search_empty">Nothing found</string>
+    <string name="g_search_empty_sub">Try another word</string>
+    <string name="g_hero_description">This is how the keyboard looks now</string>
+    <string name="g_group_typing">Typing</string>
+    <string name="g_languages">Languages and layouts</string>
+    <string name="g_languages_sub">Swipe the space bar to switch language</string>
+    <string name="g_swipe">Swipe typing</string>
+    <string name="g_correction">Text correction</string>
+    <string name="g_dictionaries">Dictionaries</string>
+    <string name="g_group_look">Look and feel</string>
+    <string name="g_theme">Theme and lighting</string>
+    <string name="g_theme_sub">Enter key colour, key gloss</string>
+    <string name="g_keys">Keys and rows</string>
+    <string name="g_keys_sub">Number row, arrows, emoji</string>
+    <string name="g_strip">Suggestion strip</string>
+    <string name="g_feedback">Vibration and sound</string>
+    <string name="g_group_more">More</string>
+    <string name="g_backup">Backup</string>
+    <string name="g_backup_sub">Move to another phone, reset</string>
+    <string name="g_about">About</string>
+    <string name="g_version">Version %s</string>
+    <string name="g_advanced">Advanced settings</string>
+    <string name="g_advanced_sub_off">Shows more: keyboard height, your own colours, flat keys without light</string>
+    <string name="g_advanced_sub_on">Size, manual colours, plain look</string>
+    <string name="g_group_advanced">Advanced</string>
+    <string name="g_adv_plain">Plain look, no effects</string>
+    <string name="g_adv_plain_sub">Flat keys, no light or shadows</string>
+    <string name="g_adv_colors">Colours and style by hand</string>
+    <string name="g_adv_colors_sub">Your own background, key and letter colours</string>
+    <string name="g_adv_size">Size and position</string>
+    <string name="g_adv_size_sub">Height, bottom gap, one-handed, split</string>
+    <string name="g_adv_trail">Swipe trail and speed</string>
+    <string name="g_adv_trail_sub">How the trail looks, the floating word, sensitivity</string>
+    <string name="g_adv_toolbar">Buttons above the keyboard</string>
+    <string name="g_adv_toolbar_sub">Which buttons to show and in what order</string>
+    <string name="g_adv_layouts">More layouts</string>
+    <string name="g_adv_layouts_sub">Symbols, numbers, your own layouts</string>
+    <string name="g_adv_developer">For developers</string>
+    <string name="g_adv_developer_sub">Debugging and experimental features</string>
+    <string name="g_advanced_note">Turn the switch off and this section hides again. Your settings stay as they are.</string>
+</resources>
