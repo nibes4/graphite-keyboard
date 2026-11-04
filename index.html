@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" data-l="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graphite Keyboard</title>
+<meta name="description" content="A dark keyboard with keys that look real. English, Czech, Russian, Ukrainian.">
+<meta name="theme-color" content="#0B0B0D">
+<meta property="og:title" content="Graphite Keyboard">
+<meta property="og:description" content="A dark keyboard with keys that look real. English, Czech, Russian, Ukrainian.">
+<meta property="og:image" content="assets/og.png">
+<link rel="icon" href="assets/icon-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>
+  // language: saved choice, else the phone's language (ru/uk read Russian), else English
+  (function () {
+    var l = null;
+    try { l = localStorage.getItem('graphite-lang'); } catch (e) {}
+    if (!l) {
+      var langs = navigator.languages || [navigator.language || 'en'];
+      l = /^(ru|uk|be)/i.test(langs[0]) ? 'ru' : 'en';
+    }
+    document.documentElement.dataset.l = l;
+    document.documentElement.lang = l;
+  })();
+</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="./" aria-label="Graphite"><svg viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A2A30"/><stop offset="1" stop-color="#121215"/></linearGradient></defs><circle cx="36" cy="36" r="36" fill="url(#gb)"/><circle cx="20.25" cy="17.10" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="26.55" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="32.85" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="39.15" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="17.10" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="23.40" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="29.70" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="36.00" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="36.00" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="36.00" r="2.35" fill="#8B5CF6"/><circle cx="20.25" cy="42.30" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="42.30" r="2.35" fill="#E8E8EA"/><circle cx="20.25" cy="48.60" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="48.60" r="2.35" fill="#E8E8EA"/><circle cx="20.25" cy="54.90" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="26.55" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="32.85" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="39.15" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="54.90" r="2.35" fill="rgba(255,255,255,0.07)"/></svg><span>Graphite</span></a>
+  <nav>
+    <a class="en" href="privacy.html">Privacy</a><a class="ru" href="privacy.html">Конфиденциальность</a>
+    <button class="lang" type="button" data-to="ru" aria-label="Русский">RU</button>
+    <button class="lang" type="button" data-to="en" aria-label="English">EN</button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="halftone" aria-hidden="true"></div>
+    <div class="hero-copy">
+      <p class="pill"><span class="dot"></span><span class="en">Coming to Google Play</span><span class="ru">Скоро в Google Play</span></p>
+      <h1 class="en">Keys that <span class="v">catch the light.</span></h1>
+      <h1 class="ru">Клавиши, на которые <span class="v">падает свет.</span></h1>
+      <p class="lead en">A matte surface, a light rim on top, a soft shadow below.</p>
+      <p class="lead ru">Матовая поверхность, светлый край сверху, мягкая тень снизу.</p>
+    </div>
+    <figure class="shot hero-shot">
+      <img src="assets/col-violet.webp" width="1080" height="799" alt="Graphite keyboard with a violet accent">
+    </figure>
+  </section>
+
+  <section class="row">
+    <div class="copy">
+      <p class="num">01</p>
+      <h2 class="en">Four languages. <span class="v">One keyboard.</span></h2>
+      <h2 class="ru">Четыре языка. <span class="v">Одна клавиатура.</span></h2>
+      <p class="en">Swipe the space bar to switch language.</p>
+      <p class="ru">Смахните по пробелу, чтобы сменить язык.</p>
+      <ul class="langs"><li>English</li><li>Čeština</li><li>Русский</li><li>Українська</li></ul>
+    </div>
+    <figure class="shot stack">
+      <img src="assets/kb-en-hel.webp" width="1080" height="827" alt="English layout" loading="lazy">
+      <img src="assets/kb-ru-sug.webp" width="1080" height="827" alt="Russian layout" loading="lazy">
+    </figure>
+  </section>
+
+  <section class="row flip">
+    <div class="copy">
+      <p class="num">02</p>
+      <h2 class="en">Your colour. <span class="v">Any colour.</span></h2>
+      <h2 class="ru">Ваш цвет. <span class="v">Любой.</span></h2>
+      <p class="en">Nine presets, or any colour you like.</p>
+      <p class="ru">Девять готовых цветов или любой свой.</p>
+      <ul class="swatches" aria-hidden="true"><li style="background:#8458E9"></li><li style="background:#3C76F1"></li><li style="background:#24A0C9"></li><li style="background:#35F19C"></li><li style="background:#25BC5D"></li><li style="background:#DCA90C"></li><li style="background:#CE7333"></li><li style="background:#E24343"></li><li style="background:#DF4692"></li></ul>
+    </div>
+    <figure class="shot cut">
+      <img src="assets/colours.webp" width="1080" height="1156" alt="The same keyboard row in nine accent colours" loading="lazy">
+    </figure>
+  </section>
+
+  <section class="row">
+    <div class="copy">
+      <p class="num">03</p>
+      <h2 class="en">Hold <span class="v">a key.</span></h2>
+      <h2 class="ru">Зажмите <span class="v">букву.</span></h2>
+      <p class="en">Symbols and accented letters on long press.</p>
+      <p class="ru">Символы и буквы с диакритикой по долгому нажатию.</p>
+    </div>
+    <figure class="shot cut">
+      <img class="en" src="assets/kb-en-lp.webp" width="1080" height="1060" alt="Long press on e shows accented letters" loading="lazy">
+      <img class="ru" src="assets/kb-ru-lp.webp" width="1080" height="910" alt="Долгое нажатие показывает символы" loading="lazy">
+    </figure>
+  </section>
+
+  <section class="row flip">
+    <div class="copy">
+      <p class="num">04</p>
+      <h2 class="en">Finishes <span class="v">your words.</span></h2>
+      <h2 class="ru">Подскажет <span class="v">слово.</span></h2>
+      <p class="en">Word suggestions in all four languages.</p>
+      <p class="ru">Подсказки на всех четырёх языках.</p>
+    </div>
+    <figure class="shot">
+      <img class="en" src="assets/kb-en-than.webp" width="1080" height="827" alt="English word suggestions above the keys" loading="lazy">
+      <img class="ru" src="assets/kb-ru-privet.webp" width="1080" height="827" alt="Подсказки слов над клавишами" loading="lazy">
+    </figure>
+  </section>
+
+  <section class="offline">
+    <div class="orb" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 18l.01 0"/><path d="M9.172 15.172a4 4 0 0 1 5.656 0"/><path d="M6.343 12.343a7.963 7.963 0 0 1 3.864 -2.14m4.163 .155a7.965 7.965 0 0 1 3.287 2"/><path d="M3.515 9.515a12 12 0 0 1 3.544 -2.455m3.101 -.92a12 12 0 0 1 10.325 3.374"/><path d="M3 3l18 18"/></svg></div>
+    <h2 class="en">No internet <span class="v">access.</span></h2>
+    <h2 class="ru">Без <span class="v">интернета.</span></h2>
+    <p class="en">What you type stays on your phone.</p>
+    <p class="ru">Всё, что вы набираете, остаётся на телефоне.</p>
+    <ul class="chips">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg><span class="en">No ads</span><span class="ru">Без рекламы</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg><span class="en">No purchases</span><span class="ru">Без покупок</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg><span class="en">Open source</span><span class="ru">Открытый код</span></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="brand"><svg viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A2A30"/><stop offset="1" stop-color="#121215"/></linearGradient></defs><circle cx="36" cy="36" r="36" fill="url(#gb)"/><circle cx="20.25" cy="17.10" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="26.55" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="32.85" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="39.15" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="17.10" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="23.40" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="29.70" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="36.00" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="36.00" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="36.00" r="2.35" fill="#8B5CF6"/><circle cx="20.25" cy="42.30" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="42.30" r="2.35" fill="#E8E8EA"/><circle cx="20.25" cy="48.60" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="48.60" r="2.35" fill="#E8E8EA"/><circle cx="20.25" cy="54.90" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="26.55" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="32.85" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="39.15" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="54.90" r="2.35" fill="rgba(255,255,255,0.07)"/></svg><span>Graphite</span></div>
+  <p class="en">Built on HeliBoard, an open-source keyboard. Released under GPL-3.0. <a href="https://github.com/nibes4/graphite-keyboard">Source code</a></p>
+  <p class="ru">Сделано на основе HeliBoard, клавиатуры с открытым кодом. Лицензия GPL-3.0. <a href="https://github.com/nibes4/graphite-keyboard">Исходный код</a></p>
+  <p><a class="en" href="privacy.html">Privacy policy</a><a class="ru" href="privacy.html">Политика конфиденциальности</a> · <a href="mailto:nick.besiedin@gmail.com">nick.besiedin@gmail.com</a></p>
+</footer>
+<script src="assets/lang.js" defer></script>
+</body>
+</html>

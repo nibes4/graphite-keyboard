@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" data-l="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graphite Keyboard: Privacy</title>
+<meta name="description" content="Graphite Keyboard has no internet access and collects no data.">
+<meta name="theme-color" content="#0B0B0D">
+<link rel="icon" href="assets/icon-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>
+  (function () {
+    var l = null;
+    try { l = localStorage.getItem('graphite-lang'); } catch (e) {}
+    if (!l) {
+      var langs = navigator.languages || [navigator.language || 'en'];
+      l = /^(ru|uk|be)/i.test(langs[0]) ? 'ru' : 'en';
+    }
+    document.documentElement.dataset.l = l;
+    document.documentElement.lang = l;
+  })();
+</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="./" aria-label="Graphite"><svg viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A2A30"/><stop offset="1" stop-color="#121215"/></linearGradient></defs><circle cx="36" cy="36" r="36" fill="url(#gb)"/><circle cx="20.25" cy="17.10" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="26.55" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="32.85" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="39.15" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="17.10" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="23.40" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="29.70" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="36.00" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="36.00" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="36.00" r="2.35" fill="#8B5CF6"/><circle cx="20.25" cy="42.30" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="42.30" r="2.35" fill="#E8E8EA"/><circle cx="20.25" cy="48.60" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="48.60" r="2.35" fill="#E8E8EA"/><circle cx="20.25" cy="54.90" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="26.55" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="32.85" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="39.15" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="54.90" r="2.35" fill="rgba(255,255,255,0.07)"/></svg><span>Graphite</span></a>
+  <nav>
+    <button class="lang" type="button" data-to="ru" aria-label="Русский">RU</button>
+    <button class="lang" type="button" data-to="en" aria-label="English">EN</button>
+  </nav>
+</header>
+
+<main class="doc">
+  <a class="back en" href="./"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg>Back to Graphite</a>
+  <a class="back ru" href="./"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg>Назад к Graphite</a>
+  <article class="en" lang="en"><h1>Graphite Keyboard: Privacy Policy</h1>
+<p class="updated">Last updated: 2026-11-03</p>
+<p>Graphite Keyboard (“Graphite”) is an Android keyboard published by Nick Besiedin.</p>
+<h2>The short version</h2>
+<p>Graphite has no internet access and collects no data. Everything you type is processed on your phone and never leaves it through Graphite.</p>
+<h2>What stays on your phone</h2>
+<ul>
+<li><strong>What you type.</strong> Used only to show word suggestions and corrections. Learned words are stored on the device.</li>
+<li><strong>Your personal dictionary and settings.</strong> Stored on the device. A backup file is created only when you make one yourself, and you choose where to save it.</li>
+<li><strong>Contacts (optional).</strong> If you turn on contact name suggestions, Graphite reads contact names to suggest them while you type. Names are not stored elsewhere or sent anywhere. Off by default; Android asks for permission first.</li>
+</ul>
+<h2>Voice input</h2>
+<p>When you tap the microphone, Graphite asks Android's speech recognition service to turn your speech into text. That service is part of your phone, usually provided by Google, and handles your audio under its own privacy policy. Graphite does not record, store or send audio itself. The microphone is used only while voice input is on. Android asks for microphone permission the first time.</p>
+<h2>Permissions</h2>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microphone</td>
+<td>Voice input, only after you tap the mic</td>
+</tr>
+<tr>
+<td>Contacts</td>
+<td>Optional name suggestions</td>
+</tr>
+<tr>
+<td>Read and write user dictionary</td>
+<td>Your personal words</td>
+</tr>
+<tr>
+<td>Vibrate</td>
+<td>Vibration on key press</td>
+</tr>
+<tr>
+<td>Run at startup</td>
+<td>Restores the keyboard after the phone restarts</td>
+</tr>
+</tbody>
+</table>
+<p>Graphite does not request internet access.</p>
+<h2>Children</h2>
+<p>Graphite is not aimed at children and collects no data from anyone.</p>
+<h2>Changes</h2>
+<p>If this policy changes, the new version will be posted on this page with a new date.</p>
+<h2>Contact</h2>
+<p>nick.besiedin@gmail.com</p></article>
+  <article class="ru" lang="ru"><h1>Политика конфиденциальности Graphite</h1>
+<p class="updated">Обновлено: 2026-11-03</p>
+<p>Graphite: клавиатура для Android от Nick Besiedin.</p>
+<h2>Коротко</h2>
+<p>У Graphite нет доступа в интернет, и она не собирает данные. Всё, что вы набираете, обрабатывается на телефоне и через Graphite никуда не уходит.</p>
+<h2>Что остаётся на телефоне</h2>
+<ul>
+<li><strong>Набранный текст.</strong> Используется только для подсказок и исправлений. Выученные слова хранятся на устройстве.</li>
+<li><strong>Ваш словарь и настройки.</strong> Хранятся на устройстве. Файл резервной копии появляется, только когда вы сами его создаёте, и вы выбираете, куда его сохранить.</li>
+<li><strong>Контакты (по желанию).</strong> Если включить подсказку имён из контактов, Graphite читает имена, чтобы подсказывать их при наборе. Имена никуда не отправляются. По умолчанию выключено, Android сначала спрашивает разрешение.</li>
+</ul>
+<h2>Голосовой ввод</h2>
+<p>Когда вы нажимаете на микрофон, Graphite просит системный сервис распознавания речи Android превратить речь в текст. Этот сервис входит в систему телефона, обычно его поставляет Google, и звук он обрабатывает по своей политике конфиденциальности. Сама Graphite звук не записывает, не хранит и не отправляет. Микрофон работает, только пока включён голосовой ввод. Разрешение на микрофон Android спрашивает при первом нажатии.</p>
+<h2>Разрешения</h2>
+<table>
+<thead>
+<tr>
+<th>Разрешение</th>
+<th>Зачем</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Микрофон</td>
+<td>Голосовой ввод, только после нажатия на микрофон</td>
+</tr>
+<tr>
+<td>Контакты</td>
+<td>Подсказка имён, по желанию</td>
+</tr>
+<tr>
+<td>Чтение и запись пользовательского словаря</td>
+<td>Ваши слова</td>
+</tr>
+<tr>
+<td>Вибрация</td>
+<td>Отклик на нажатие</td>
+</tr>
+<tr>
+<td>Запуск при включении</td>
+<td>Клавиатура снова работает после перезагрузки</td>
+</tr>
+</tbody>
+</table>
+<p>Graphite не запрашивает доступ в интернет.</p>
+<h2>Дети</h2>
+<p>Graphite не рассчитана на детей и ни у кого не собирает данные.</p>
+<h2>Изменения</h2>
+<p>Если политика изменится, новая версия появится на этой странице с новой датой.</p>
+<h2>Связь</h2>
+<p>nick.besiedin@gmail.com</p></article>
+</main>
+
+<footer class="foot narrow">
+  <div class="brand"><svg viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A2A30"/><stop offset="1" stop-color="#121215"/></linearGradient></defs><circle cx="36" cy="36" r="36" fill="url(#gb)"/><circle cx="20.25" cy="17.10" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="26.55" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="32.85" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="39.15" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="17.10" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="17.10" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="23.40" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="23.40" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="29.70" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="29.70" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="20.25" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="36.00" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="36.00" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="36.00" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="36.00" r="2.35" fill="#8B5CF6"/><circle cx="20.25" cy="42.30" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="42.30" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="42.30" r="2.35" fill="#E8E8EA"/><circle cx="20.25" cy="48.60" r="2.35" fill="#E8E8EA"/><circle cx="26.55" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="32.85" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="39.15" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="45.45" cy="48.60" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="51.75" cy="48.60" r="2.35" fill="#E8E8EA"/><circle cx="20.25" cy="54.90" r="2.35" fill="rgba(255,255,255,0.07)"/><circle cx="26.55" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="32.85" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="39.15" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="45.45" cy="54.90" r="2.35" fill="#E8E8EA"/><circle cx="51.75" cy="54.90" r="2.35" fill="rgba(255,255,255,0.07)"/></svg><span>Graphite</span></div>
+  <p class="en">Built on HeliBoard, an open-source keyboard. Released under GPL-3.0. <a href="https://github.com/nibes4/graphite-keyboard">Source code</a></p>
+  <p class="ru">Сделано на основе HeliBoard, клавиатуры с открытым кодом. Лицензия GPL-3.0. <a href="https://github.com/nibes4/graphite-keyboard">Исходный код</a></p>
+</footer>
+<script src="assets/lang.js" defer></script>
+</body>
+</html>
