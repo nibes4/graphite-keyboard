@@ -44,4 +44,36 @@
     <string name="g_adv_developer">Для разработчиков</string>
     <string name="g_adv_developer_sub">Отладка и пробные функции</string>
     <string name="g_advanced_note">Выключите переключатель, и этот раздел снова спрячется. Ваши настройки при этом не сбросятся.</string>
+
+    <!-- Онбординг первого запуска (Onb1..4 в макетах). -->
+    <string name="gonb_welcome_title">Клавиши, на которые\nпадает свет.</string>
+    <string name="gonb_welcome_sub">Клавиатура, на которую приятно смотреть и быстро печатать.</string>
+    <string name="gonb_start">Начать</string>
+    <string name="gonb_start_hint">Три шага, меньше минуты</string>
+    <string name="gonb_back">Назад</string>
+    <string name="gonb_step_of">Шаг %1$d из 3</string>
+    <string name="gonb_s1_title">Включите Graphite в Android</string>
+    <string name="gonb_s1_sub">В списке клавиатур найдите Graphite и передвиньте переключатель.</string>
+    <string name="gonb_s1_cta">Открыть настройки Android</string>
+    <string name="gonb_s1_security">Android предупредит, что клавиатура может собирать текст. Так Android пишет про любую клавиатуру. Graphite не выходит в интернет: у неё нет такого разрешения.</string>
+    <string name="gonb_s2_title">Сделайте Graphite основной</string>
+    <string name="gonb_s2_sub">Откроется окно выбора клавиатуры. Отметьте Graphite.</string>
+    <string name="gonb_s2_cta">Выбрать клавиатуру</string>
+    <string name="gonb_s2_note">Как только выберете Graphite, экран сам перейдёт дальше.</string>
+    <string name="gonb_s3_title">Попробуйте</string>
+    <string name="gonb_s3_done">Готово</string>
+    <string name="gonb_s3_tip_space">Свайп по пробелу меняет язык</string>
+    <string name="gonb_s3_tip_number">Зажмите букву, чтобы ввести цифру</string>
+    <string name="gonb_s3_placeholder">Напишите что-нибудь</string>
+    <string name="gonb_s3_field">Поле для проверки клавиатуры</string>
+    <string name="gonb_r1_title">Graphite пока выключена</string>
+    <string name="gonb_r1_note">Откройте настройки ещё раз и передвиньте переключатель рядом с Graphite.</string>
+    <string name="gonb_r1_cta">Открыть настройки ещё раз</string>
+    <string name="gonb_r2_title">Осталась старая клавиатура</string>
+    <string name="gonb_r2_note">Откройте выбор ещё раз и отметьте Graphite.</string>
+    <string name="gonb_r2_cta">Открыть выбор ещё раз</string>
+    <string name="gonb_orb_keyboards">Экранная клавиатура</string>
+    <string name="gonb_orb_voice">Голосовой ввод Google</string>
+    <string name="gonb_orb_choose">Выберите способ ввода</string>
+    <string name="gonb_orb_alt">Так выглядит список клавиатур в настройках Android</string>
 </resources>

@@ -43,4 +43,36 @@
     <string name="g_adv_developer">For developers</string>
     <string name="g_adv_developer_sub">Debugging and experimental features</string>
     <string name="g_advanced_note">Turn the switch off and this section hides again. Your settings stay as they are.</string>
+
+    <!-- First-run onboarding (Onb1..4 in the mockups). New English copy is a proposal until Nick approves it. -->
+    <string name="gonb_welcome_title">Keys that catch\nthe light.</string>
+    <string name="gonb_welcome_sub">A keyboard that looks good and types fast.</string>
+    <string name="gonb_start">Get started</string>
+    <string name="gonb_start_hint">Three steps, under a minute</string>
+    <string name="gonb_back">Back</string>
+    <string name="gonb_step_of">Step %1$d of 3</string>
+    <string name="gonb_s1_title">Turn on Graphite in Android</string>
+    <string name="gonb_s1_sub">Find Graphite in the keyboard list and flip its switch.</string>
+    <string name="gonb_s1_cta">Open Android settings</string>
+    <string name="gonb_s1_security">Android will warn that a keyboard can collect what you type. It says this about every keyboard. Graphite never goes online: it has no internet permission.</string>
+    <string name="gonb_s2_title">Make Graphite your main keyboard</string>
+    <string name="gonb_s2_sub">A picker will open. Choose Graphite.</string>
+    <string name="gonb_s2_cta">Choose keyboard</string>
+    <string name="gonb_s2_note">As soon as you pick Graphite, this screen moves on by itself.</string>
+    <string name="gonb_s3_title">Try it</string>
+    <string name="gonb_s3_done">Done</string>
+    <string name="gonb_s3_tip_space">Swipe the space bar to switch language</string>
+    <string name="gonb_s3_tip_number">Hold a letter to type a number</string>
+    <string name="gonb_s3_placeholder">Type something</string>
+    <string name="gonb_s3_field">Try the keyboard here</string>
+    <string name="gonb_r1_title">Graphite is still off</string>
+    <string name="gonb_r1_note">Open the settings again and flip the switch next to Graphite.</string>
+    <string name="gonb_r1_cta">Open settings again</string>
+    <string name="gonb_r2_title">The old keyboard is still active</string>
+    <string name="gonb_r2_note">Open the picker again and choose Graphite.</string>
+    <string name="gonb_r2_cta">Open the picker again</string>
+    <string name="gonb_orb_keyboards">On-screen keyboard</string>
+    <string name="gonb_orb_voice">Google voice typing</string>
+    <string name="gonb_orb_choose">Choose input method</string>
+    <string name="gonb_orb_alt">What the list of keyboards in Android settings looks like</string>
 </resources>

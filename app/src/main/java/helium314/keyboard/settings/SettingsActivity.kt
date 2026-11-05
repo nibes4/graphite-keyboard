@@ -94,8 +94,7 @@ open class SettingsActivity : ComponentActivity(), SharedPreferences.OnSharedPre
                     val crashFilePicker = filePicker { saveCrashReports(it) }
                     var showWelcomeWizard by rememberSaveable { mutableStateOf(
                         !UncachedInputMethodManagerUtils.isThisImeCurrent(this, imm)
-                                || !UncachedInputMethodManagerUtils.isThisImeEnabled(this, imm)
-                    ) }
+                                || !UncachedInputMethodManagerUtils.isThisImeEnabled(this, imm)                    ) }
                     if (spellchecker)
                         Scaffold(contentWindowInsets = WindowInsets.safeDrawing) { innerPadding ->
                             Column(Modifier.padding(innerPadding)) {

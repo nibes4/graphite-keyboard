@@ -218,6 +218,8 @@ object SubtypeSettings {
     @Suppress("SameReturnValue")
     private fun getDefaultEnabledSubtypes(): List<InputMethodSubtype> {
         if (systemSubtypes.isNotEmpty()) return systemSubtypes
+        // Graphite: only the first system language is on by default. Every other language is added by hand,
+        // so a phone with English + Czech does not get both mixed into one keyboard.
         val subtypes = systemLocales.mapNotNull { locale ->
             val subtypesOfLocale = resourceSubtypesByLocale[locale]
             // get best match
@@ -228,7 +230,7 @@ object SubtypeSettings {
             // hardcoded fallback to en-US for weird cases
             systemSubtypes.add(resourceSubtypesByLocale[Locale.US]!!.first())
         } else {
-            systemSubtypes.addAll(subtypes)
+            systemSubtypes.add(subtypes.first())
         }
         return systemSubtypes
     }

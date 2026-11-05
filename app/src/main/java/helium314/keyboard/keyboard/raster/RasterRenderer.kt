@@ -350,7 +350,7 @@ class RasterRenderer(private val theme: RasterTheme) {
         var n = 0; var all = 0
         for (y in 0 until gh step 3) for (x in 0 until gw step 3) {
             all++
-            if (sample(x - sx, y - sy) < dark) n++
+            if (lit(x, y, sx, sy) < dark) n++
         }
         return n.toFloat() / all
     }
@@ -380,16 +380,24 @@ class RasterRenderer(private val theme: RasterTheme) {
         val sx = tiltX * gw / w; val sy = tiltY * gh / panelH
         var top = 1f
         for (y in 0 until gh) for (x in 0 until gw)
-            top = max(top, sample(x - sx, y - sy) / max(grid[y * gw + x], MIN_LIGHT))
+            top = max(top, lit(x, y, sx, sy) / max(grid[y * gw + x], MIN_LIGHT))
         val k = min(top, 4f)
         for (y in 0 until gh) for (x in 0 until gw) {
             val i = y * gw + x
-            val g = clamp(sample(x - sx, y - sy) / max(grid[i], MIN_LIGHT) / k * 255f + 0.5f)
+            val g = clamp(lit(x, y, sx, sy) / max(grid[i], MIN_LIGHT) / k * 255f + 0.5f)
             ratioBuf[i] = (0xff shl 24) or (g shl 16) or (g shl 8) or g
         }
         ratio!!.setPixels(ratioBuf, 0, gw, 0, 0, gw, gh)
         layerPaint.colorFilter = ColorMatrixColorFilter(ColorMatrix().apply { setScale(k, k, k, 1f) })
     }
+
+    /**
+     * Light at grid cell x, y with the light moved by sx, sy. Nick 2026-11-05: at the extremes the far side of the
+     * board went almost black, so the shifted light never drops below [AMBIENT] of the mean. A cell that is already
+     * darker than that with the light level keeps its own value, so the floor never lifts the flat look.
+     */
+    private fun lit(x: Int, y: Int, sx: Float, sy: Float): Float =
+        max(sample(x - sx, y - sy), min(grid[y * gw + x], AMBIENT * lightMean))
 
     /** Bilinear sample of [grid], edges repeated. */
     private fun sample(x: Float, y: Float): Float {
@@ -608,7 +616,8 @@ class RasterRenderer(private val theme: RasterTheme) {
 
     private fun composeRows(d: Rect, fromRow: Int, toRow: Int) {
         val rw = d.width()
-        val labLit = theme.labelLighting
+        // Nick 2026-11-05: letters in the shaded corner went ghostly; they follow the light only part of the way
+        val labLit = theme.labelLighting * LABEL_LIGHT_SHARE
         val entLit = theme.skins["enter"]?.lighting ?: 1f
         for (y in fromRow until toRow) {
             var i = (d.top + y) * w + d.left
@@ -659,6 +668,10 @@ class RasterRenderer(private val theme: RasterTheme) {
          *  of depth. 18 px (the first value) made the keys look a few millimetres tall. */
         private const val SHADOW_SHIFT = 16f
         private const val MIN_LIGHT = 0.04f
+        /** Share of the theme's label_lighting that applies: the rest of a label's brightness stays put in shade. */
+        private const val LABEL_LIGHT_SHARE = 0.6f
+        /** The shifted light never goes below this share of the mean light (see [lit]). */
+        private const val AMBIENT = 0.68f
         /** Light below this share of the mean reads as shade: the labels there go dim (measured on tilt captures). */
         private const val SHADE_LEVEL = 0.7f
         /** At most a third of the board in shade at any tilt, well under the half Nick saw. */
